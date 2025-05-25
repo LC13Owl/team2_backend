@@ -1,18 +1,20 @@
 package com.example.test.service;
 
 import com.example.test.dto.BoardDto;
-import com.example.test.dto.DtoExceptContent;
+import com.example.test.dto.DtoForList;
 import com.example.test.entity.BoardEntity;
 import com.example.test.repository.BoardRepository;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
 @Service
+@Transactional
 public class BoardService {
 
     @Autowired
@@ -44,13 +46,26 @@ public class BoardService {
         return boardDtos;
     }
 
-    public List<DtoExceptContent> ReadExceptContent() {
+    public List<DtoForList> ReadExceptContent() {
         List<BoardEntity> boardEntities = boardRepository.findAll();
-        List<DtoExceptContent> DEC = new ArrayList<>();
+        List<DtoForList> DEC = new ArrayList<>();
 
         for (BoardEntity boardEntity : boardEntities) {
-            DtoExceptContent dto = new DtoExceptContent(boardEntity.getId(), boardEntity.getTitle());
+            DtoForList dto = new DtoForList(boardEntity.getId(), boardEntity.getTitle(), boardEntity.getPin());
             DEC.add(dto);
+        }
+        return DEC;
+    }
+
+    public List<DtoForList> ReadForSearch(String name) {
+        List<BoardEntity> boardEntities = boardRepository.findAll();
+        List<DtoForList> DEC = new ArrayList<>();
+
+        for (BoardEntity boardEntity : boardEntities) {
+            if (boardEntity.getTitle().contains(name)) {
+                DtoForList dto = new DtoForList(boardEntity.getId(), boardEntity.getTitle(), boardEntity.getPin());
+                DEC.add(dto);
+            }
         }
         return DEC;
     }
@@ -69,17 +84,35 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
+    // 공감 기능
+    public void likeBoard(int id) {
+        BoardEntity entity = boardRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다. id=" + id));
+        entity.setGood(entity.getGood() + 1);
+    }
+
+    // 고정글 기능
+    public void pinBoard(int id) {
+        BoardEntity entity = boardRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다. id=" + id));
+        entity.setPin(1 - entity.getPin());
+    }
+
+
     // 엔티티의 get메서드를 활용해 dto에 부여하는데, 모든 컬럼에 대해 한 번에 실행하도록 함수화
     private BoardDto convertToDto(BoardEntity entity) {
         BoardDto dto = new BoardDto();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
         dto.setContent(entity.getContent());
+        dto.setPin(entity.getPin());
+        dto.setPin(entity.getPin());
+        dto.setGood(entity.getGood());
         return dto;
     }
 
     // 위와 마찬가지
     private BoardEntity convertToEntity(BoardDto dto) {
-        return new BoardEntity(dto.getTitle(), dto.getContent());
+        return new BoardEntity(dto.getTitle(), dto.getContent(), dto.getCreatedAt(), dto.getPin(), dto.getGood());
     }
 }

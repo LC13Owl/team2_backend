@@ -9,11 +9,15 @@ public class    BoardDto {
     private String title;
     private String content;
     private LocalDateTime createdAt;
+    private Integer pin;
+    private Integer good;
 
     public BoardDto( String title, String content, LocalDateTime createdAt) {
     this.title = title;
     this.content = content;
     this.createdAt = createdAt;
+    this.pin = pin;
+    this.good = good;
     }
 
     public BoardDto() {
@@ -47,4 +51,12 @@ public class    BoardDto {
     public LocalDateTime getCreatedAt() {return createdAt;}
 
     public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
+
+    public Integer getPin() {return pin;}
+
+    public void setPin(Integer pin) {this.pin = pin;}
+
+    public Integer getGood() {return good;}
+
+    public void setGood(Integer good) {this.good = good;}
 }
