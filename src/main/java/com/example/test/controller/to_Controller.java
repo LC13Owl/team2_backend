@@ -64,10 +64,11 @@ public class to_Controller {
         return boardService.ReadForSearch(title);
     }
 
-    // 2.3 게시글 고정(U)
+    // 2.3 게시글 고정 (U)
     @PutMapping("/{id}/pin")
     public void pinBoard(@PathVariable int id) {
         boardService.pinBoard(id);
     }
 
+    // 3.1 댓글 작성 (C)
 }
