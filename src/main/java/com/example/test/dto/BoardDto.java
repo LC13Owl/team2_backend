@@ -4,7 +4,7 @@ package com.example.test.dto;
 
 import java.time.LocalDateTime;
 
-public class    BoardDto {
+public class BoardDto {
     private Integer id;
     private String title;
     private String content;

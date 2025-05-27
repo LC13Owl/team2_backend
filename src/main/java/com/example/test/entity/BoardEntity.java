@@ -18,7 +18,7 @@ public class BoardEntity {
     @Column(name = "content", length = 500)
     private String content;
     @CreationTimestamp  // 생성 시각 자동 입력
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "pin", length = 50)
     private Integer pin;
     @Column(name = "good", length = 50)
