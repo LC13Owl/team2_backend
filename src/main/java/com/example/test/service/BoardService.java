@@ -2,8 +2,11 @@ package com.example.test.service;
 
 import com.example.test.dto.BoardDto;
 import com.example.test.dto.DtoForList;
+import com.example.test.dto.DtoForReply;
 import com.example.test.entity.BoardEntity;
+import com.example.test.entity.Reply;
 import com.example.test.repository.BoardRepository;
+import com.example.test.repository.ReplyRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

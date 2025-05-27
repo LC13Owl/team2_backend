@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
+
+
 
 @RestController
+@CrossOrigin(origins = "http://192.168.0.71:5173")
 @RequestMapping("/api/posts")
 public class to_Controller {
 

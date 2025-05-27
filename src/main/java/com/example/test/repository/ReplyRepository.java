@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
-public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
-    
-}
+public interface ReplyRepository extends JpaRepository<Reply, Integer> {
 
+}
